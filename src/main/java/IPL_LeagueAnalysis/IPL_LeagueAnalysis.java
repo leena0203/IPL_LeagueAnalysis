@@ -6,11 +6,15 @@ import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
 import java.util.Iterator;
+import java.util.List;
+
 import CSVReader.CSVBuilderExecption;
 import CSVReader.CSVBuilderFactory;
 import CSVReader.ICSVBuilder;
 
 public class IPL_LeagueAnalysis {
+	List<IPLMostRuns> csvRuns = null;
+	List<IPLMostWickets> csvWickets = null;
 
 	public static void main(String[] args) {
 		System.out.println("Welcome to IPL League Analysis");
@@ -25,9 +29,8 @@ public class IPL_LeagueAnalysis {
 	public int loadMostRunsCSVFile(String fileName) throws IOException, CSVBuilderExecption{
 		Reader read = Files.newBufferedReader(Paths.get(fileName));
 		ICSVBuilder csv = CSVBuilderFactory.createCSVBuilder();
-		Iterator<IPLMostRuns> mostRunsIterator = csv.getCSVFileIterator(read, IPLMostRuns.class);
-		int numOfRecord = this.getNumOfPlayers(mostRunsIterator);
-		return numOfRecord;
+		csvRuns = csv.getCSVFileList(read, IPLMostRuns.class);
+		return csvRuns.size();
 	}
 	public int loadMostWicketsCSVFile(String fileName) throws IOException, CSVBuilderExecption{
 		Reader read = Files.newBufferedReader(Paths.get(fileName));
@@ -40,10 +43,26 @@ public class IPL_LeagueAnalysis {
 		int numOfRecord = 0;
 		while (iterator.hasNext()) {
 			numOfRecord++;
-			E censusData = iterator.next();
+			E census = iterator.next();
 		}
 		return numOfRecord;
 	}
-
+	
+	/**
+	 * UC1_Return player with highest Batting avg.
+	 * @return
+	 */
+	public double getTopBattingAvg() {
+		double max = 0;
+		int count = 0;
+		for(int i =0; i < csvRuns.size(); i++) {
+			if (csvRuns.get(i).average > max) {
+				max = csvRuns.get(i).average;
+				count = i;
+			}
+		}
+		System.out.println("Player with highest Avg is: "+csvRuns.get(count).player);
+		return max;
+	}
 
 }
