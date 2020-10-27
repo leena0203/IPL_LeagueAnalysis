@@ -64,5 +64,21 @@ public class IPL_LeagueAnalysis {
 		System.out.println("Player with highest Avg is: "+csvRuns.get(count).player);
 		return max;
 	}
-
+	/**
+	 * UC2_Return player with highest strike rate.
+	 * @return
+	 */
+	public double getTopStrike() {
+		double max = 0;
+		int count = 0;
+		for(int i =0; i < csvRuns.size(); i++) {
+			if (csvRuns.get(i).strikeRate > max) {
+				max = csvRuns.get(i).strikeRate;
+				count = i;
+			}
+		}
+		System.out.println("Player with top Striking Rates is: "+csvRuns.get(count).player);
+		return max;
+	}
 }
+
