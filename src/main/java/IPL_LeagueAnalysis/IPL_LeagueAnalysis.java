@@ -15,37 +15,35 @@ public class IPL_LeagueAnalysis {
 	public static void main(String[] args) {
 		System.out.println("Welcome to IPL League Analysis");
 	}
-//	/**
-//	 * Load CSVFiles
-//	 * @param fileName
-//	 * @return
-//	 * @throws IOException
-//	 * @throws CSVBuilderExecption
-//	 */
-//	public int loadMostRunsCSVFile(String fileName) throws IOException, CSVBuilderExecption{
-//		Reader read = Files.newBufferedReader(Paths.get(fileName));
-//		ICSVBuilder csv = CSVBuilderFactory.createCSVBuilder();
-//		Iterator<IPLMostRuns> mostRunsIterator = csv.getCSVFileIterator(read, IPLMostRuns.class);
-//		int numOfRecord = this.getNumOfPlayers(mostRunsIterator);
-//		return numOfRecord;
-//	}
-//	public int loadMostWicketsCSVFile(String fileName) throws IOException, CSVBuilderExecption{
-//		Reader read = Files.newBufferedReader(Paths.get(fileName));
-//		ICSVBuilder csv = CSVBuilderFactory.createCSVBuilder();
-//		Iterator<IPLMostWickets> mostRunsIterator = csv.getCSVFileIterator(read, IPLMostWickets.class);
-//		int numOfRecord = this.getNumOfPlayers(mostRunsIterator);
-//		return numOfRecord;
-//	}
-//
-//
-//	private<E> int getNumOfPlayers(Iterator<E> iterator) {
-//		int numOfRecord = 0;
-//		while (iterator.hasNext()) {
-//			numOfRecord++;
-//			E censusData = iterator.next();
-//		}
-//		return numOfRecord;
-//	}
+	/**
+	 * Load CSVFiles
+	 * @param fileName
+	 * @return
+	 * @throws IOException
+	 * @throws CSVBuilderExecption
+	 */
+	public int loadMostRunsCSVFile(String fileName) throws IOException, CSVBuilderExecption{
+		Reader read = Files.newBufferedReader(Paths.get(fileName));
+		ICSVBuilder csv = CSVBuilderFactory.createCSVBuilder();
+		Iterator<IPLMostRuns> mostRunsIterator = csv.getCSVFileIterator(read, IPLMostRuns.class);
+		int numOfRecord = this.getNumOfPlayers(mostRunsIterator);
+		return numOfRecord;
+	}
+	public int loadMostWicketsCSVFile(String fileName) throws IOException, CSVBuilderExecption{
+		Reader read = Files.newBufferedReader(Paths.get(fileName));
+		ICSVBuilder csv = CSVBuilderFactory.createCSVBuilder();
+		Iterator<IPLMostWickets> mostRunsIterator = csv.getCSVFileIterator(read, IPLMostWickets.class);
+		int numOfRecord = this.getNumOfPlayers(mostRunsIterator);
+		return numOfRecord;
+	}
+	private<E> int getNumOfPlayers(Iterator<E> iterator) {
+		int numOfRecord = 0;
+		while (iterator.hasNext()) {
+			numOfRecord++;
+			E censusData = iterator.next();
+		}
+		return numOfRecord;
+	}
 
 
 }
