@@ -47,14 +47,14 @@ public class IPL_LeagueAnalysis {
 	 * @param list
 	 * @param censusComparator
 	 */
-	private<E> void sort(List<E> list, Comparator<E> censusComparator) {
+	private<E> void sort(List<E> list, Comparator<E> iplComparator) {
 		for (int i =0; i < list.size(); i++) {
 			for(int j =0; j < list.size() - i - 1; j++) {
-				E census1 = list.get(j);
-				E census2 = list.get(j+1);
-				if (censusComparator.compare(census1, census2) < 0) {
-					list.set(j, census2);
-					list.set(j + 1, census1);
+				E player1 = list.get(j);
+				E player2 = list.get(j+1);
+				if (iplComparator.compare(player1, player2) < 0) {
+					list.set(j, player2);
+					list.set(j + 1, player1);
 				}
 			}
 		}
@@ -64,8 +64,8 @@ public class IPL_LeagueAnalysis {
 	 * @return
 	 */
 	public String getTopBatting() {
-		Comparator<IPLMostRuns> censusComparator = Comparator.comparing(census -> census.average);
-		this.sort(csvRuns,censusComparator);
+		Comparator<IPLMostRuns> iplComparator = Comparator.comparing(ipl -> ipl.average);
+		this.sort(csvRuns,iplComparator);
 		String sortedAvg = new Gson().toJson(csvRuns);
 		return sortedAvg;
 	}
@@ -74,10 +74,20 @@ public class IPL_LeagueAnalysis {
 	 * @return
 	 */
 	public String getTopStrike() {
-		Comparator<IPLMostRuns> censusComparator = Comparator.comparing(census -> census.strikeRate);
-		this.sort(csvRuns,censusComparator);
+		Comparator<IPLMostRuns> iplComparator = Comparator.comparing(ipl -> ipl.strikeRate);
+		this.sort(csvRuns,iplComparator);
 		String sortedStrikeRate = new Gson().toJson(csvRuns);
 		return sortedStrikeRate;
+	}
+	/**
+	 * UC3_Return sorted list according to max 4s and 6s
+	 * @return
+	 */
+	public String getMax6sAnd4s() {
+		Comparator<IPLMostRuns> iplComparator = Comparator.comparing(ipl -> (ipl.fours)+(ipl.sixes));
+		this.sort(csvRuns,iplComparator);
+		String sortedHit = new Gson().toJson(csvRuns);
+		return sortedHit;
 	}
 }
 
