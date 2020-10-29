@@ -89,5 +89,27 @@ public class IPL_LeagueAnalysis {
 		String sortedHit = new Gson().toJson(csvRuns);
 		return sortedHit;
 	}
+	
+	/**
+	 * UC4_Return player with highest strike
+	 * @return
+	 */
+	public String bestStrikeWith4s6s() {
+		double max = 0;
+		double strike = 0;
+		double temp = 0;
+		double tempSR = 0;
+		String name ="";
+		for (int i =0; i< csvRuns.size();i++) {
+			temp = (csvRuns.get(i).fours + csvRuns.get(i).sixes);
+					tempSR = temp / csvRuns.get(i).bf;
+					if( temp> max && tempSR>strike) {
+						max = temp;
+						strike = tempSR;
+						name = csvRuns.get(i).player;
+					}
+		}
+		return name;
+	}
 }
 

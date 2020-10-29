@@ -60,4 +60,13 @@ public class IPL_LeagueAnalysisTest {
 		assertEquals("Andre Russell", mostRuns[0].player);
 		System.out.println("Criketer who hit maximum 6s and 4s: "+mostRuns[0].player+" with 4s: "+mostRuns[0].fours+" aand 6s: "+mostRuns[0].sixes);
 }
+	@Test
+	public void givenCSVFileOfRuns_whenSortedOnMaxStrikeRate4sAnd6s_ReturnsThePlayer() throws IOException, CSVBuilderExecption {
+		IPL_LeagueAnalysis test = new IPL_LeagueAnalysis();
+		test.loadMostRunsCSVFile(FileName_MostRuns);
+		String result = test.bestStrikeWith4s6s();
+		//IPLMostRuns[] mostRuns = new Gson().fromJson(result, IPLMostRuns[].class);
+		assertEquals("Andre Russell", result);
+		System.out.println("Criketer with highest StrikeRate and maximum 6s and 4s: "+result);
+}
 }
