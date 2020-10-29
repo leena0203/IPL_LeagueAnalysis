@@ -34,7 +34,8 @@ public class IPL_LeagueAnalysisTest {
 		}
 	}
 	@Test
-	public void givenCSVFileOfRuns_IfMatchTopBattingAvg_ReturnsThePlayer() throws IOException, CSVBuilderExecption {
+	public void givenCSVFileOfRuns_IfMatchTopBattingAvg_ReturnsThePlayer() 
+			throws IOException, CSVBuilderExecption {
 		IPL_LeagueAnalysis test = new IPL_LeagueAnalysis();
 		test.loadMostRunsCSVFile(FileName_MostRuns);
 		String result = test.getTopBatting();
@@ -43,7 +44,8 @@ public class IPL_LeagueAnalysisTest {
 		System.out.println("Cricketer with top batting avg is: "+mostRuns[0].player+" with batting average: "+mostRuns[0].average );
 	}
 	@Test
-	public void givenCSVFileOfRuns_IfMatchTopStrikingRate_ReturnsThePlayer() throws IOException, CSVBuilderExecption {
+	public void givenCSVFileOfRuns_IfMatchTopStrikingRate_ReturnsThePlayer() 
+			throws IOException, CSVBuilderExecption {
 		IPL_LeagueAnalysis test = new IPL_LeagueAnalysis();
 		test.loadMostRunsCSVFile(FileName_MostRuns);
 		String result = test.getTopStrike();
@@ -52,21 +54,31 @@ public class IPL_LeagueAnalysisTest {
 		System.out.println("Batsman with Highest Strike Rate is: "+mostRuns[0].player+" with StrikeRate: "+mostRuns[0].strikeRate);
 	}
 	@Test
-	public void givenCSVFileOfRuns_whenSortedOnMax4sAnd6s_ReturnsThePlayer() throws IOException, CSVBuilderExecption {
+	public void givenCSVFileOfRuns_whenSortedOnMax4sAnd6s_ReturnsThePlayer() 
+			throws IOException, CSVBuilderExecption {
 		IPL_LeagueAnalysis test = new IPL_LeagueAnalysis();
 		test.loadMostRunsCSVFile(FileName_MostRuns);
 		String result = test.getMax6sAnd4s();
 		IPLMostRuns[] mostRuns = new Gson().fromJson(result, IPLMostRuns[].class);
 		assertEquals("Andre Russell", mostRuns[0].player);
 		System.out.println("Criketer who hit maximum 6s and 4s: "+mostRuns[0].player+" with 4s: "+mostRuns[0].fours+" aand 6s: "+mostRuns[0].sixes);
-}
+	}
 	@Test
 	public void givenCSVFileOfRuns_whenSortedOnMaxStrikeRate4sAnd6s_ReturnsThePlayer() throws IOException, CSVBuilderExecption {
 		IPL_LeagueAnalysis test = new IPL_LeagueAnalysis();
 		test.loadMostRunsCSVFile(FileName_MostRuns);
 		String result = test.bestStrikeWith4s6s();
-		//IPLMostRuns[] mostRuns = new Gson().fromJson(result, IPLMostRuns[].class);
 		assertEquals("Andre Russell", result);
 		System.out.println("Criketer with highest StrikeRate and maximum 6s and 4s: "+result);
-}
+	}
+	@Test
+	public void givenCSVFileOfRuns_whenSortedOnBestAvgWithStrikeRate_ReturnsThePlayer() 
+			throws IOException, CSVBuilderExecption {
+		IPL_LeagueAnalysis test = new IPL_LeagueAnalysis();
+		test.loadMostRunsCSVFile(FileName_MostRuns);
+		String result = test.bestAvgWithStrikeRate();
+		IPLMostRuns[] mostRuns = new Gson().fromJson(result, IPLMostRuns[].class);
+		assertEquals("MS Dhoni", mostRuns[0].player);
+		System.out.println("Criketer with highest batting avg with best strike rate: "+mostRuns[0].player);
+	}
 }

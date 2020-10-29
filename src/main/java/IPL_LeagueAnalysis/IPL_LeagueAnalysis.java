@@ -111,5 +111,16 @@ public class IPL_LeagueAnalysis {
 		}
 		return name;
 	}
+	/**
+	 * UC5_Return player with highest strike rate and highest average
+	 * @return
+	 */
+	public String bestAvgWithStrikeRate() {
+		Comparator<IPLMostRuns> iplComparator = Comparator.comparing(ipl -> ipl.average);
+		this.sort(csvRuns,iplComparator.thenComparing(ipl -> ipl.strikeRate));
+		String sort = new Gson().toJson(csvRuns);
+		return sort;
+	}
+	
 }
 
