@@ -30,4 +30,6 @@ dependencies {
     compile group: 'com.opencsv', name: 'opencsv', version: '4.3'
     
     compile fileTree (dir:'libs', include:'*.jar')
+    // https://mvnrepository.com/artifact/com.google.code.gson/gson
+	compile group: 'com.google.code.gson', name: 'gson', version: '2.7'
 }

@@ -6,6 +6,8 @@ import java.io.IOException;
 
 import org.junit.Test;
 
+import com.google.gson.Gson;
+
 import CSVReader.CSVBuilderExecption;
 
 
@@ -35,14 +37,18 @@ public class IPL_LeagueAnalysisTest {
 	public void givenCSVFileOfRuns_IfMatchTopBattingAvg_ReturnsThePlayer() throws IOException, CSVBuilderExecption {
 		IPL_LeagueAnalysis test = new IPL_LeagueAnalysis();
 		test.loadMostRunsCSVFile(FileName_MostRuns);
-		double result = test.getTopBattingAvg();
-		assertEquals(83.2, result, 0.0);
+		String result = test.getTopBatting();
+		IPLMostRuns[] mostRuns = new Gson().fromJson(result, IPLMostRuns[].class);
+		assertEquals(83.2, mostRuns[0].average, 0.0);
+		System.out.println("Cricketer with top batting avg is: "+mostRuns[0].player+" with batting average: "+mostRuns[0].average );
 	}
 	@Test
 	public void givenCSVFileOfRuns_IfMatchTopStrikingRate_ReturnsThePlayer() throws IOException, CSVBuilderExecption {
 		IPL_LeagueAnalysis test = new IPL_LeagueAnalysis();
 		test.loadMostRunsCSVFile(FileName_MostRuns);
-		double result = test.getTopStrike();
-		assertEquals(333.33, result, 0.0);
+		String result = test.getTopStrike();
+		IPLMostRuns[] mostRuns = new Gson().fromJson(result, IPLMostRuns[].class);
+		assertEquals(333.33, mostRuns[0].strikeRate, 0.0);
+		System.out.println("Batsman with Highest Strike Rate is: "+mostRuns[0].player+" with StrikeRate: "+mostRuns[0].strikeRate);
 	}
 }

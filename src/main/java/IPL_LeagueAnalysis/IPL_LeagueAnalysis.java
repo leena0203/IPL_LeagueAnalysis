@@ -5,8 +5,11 @@ import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+
+import com.google.gson.Gson;
 
 import CSVReader.CSVBuilderExecption;
 import CSVReader.CSVBuilderFactory;
@@ -35,50 +38,46 @@ public class IPL_LeagueAnalysis {
 	public int loadMostWicketsCSVFile(String fileName) throws IOException, CSVBuilderExecption{
 		Reader read = Files.newBufferedReader(Paths.get(fileName));
 		ICSVBuilder csv = CSVBuilderFactory.createCSVBuilder();
-		Iterator<IPLMostWickets> mostRunsIterator = csv.getCSVFileIterator(read, IPLMostWickets.class);
-		int numOfRecord = this.getNumOfPlayers(mostRunsIterator);
-		return numOfRecord;
-	}
-	private<E> int getNumOfPlayers(Iterator<E> iterator) {
-		int numOfRecord = 0;
-		while (iterator.hasNext()) {
-			numOfRecord++;
-			E census = iterator.next();
-		}
-		return numOfRecord;
-	}
-	
-	/**
-	 * UC1_Return player with highest Batting avg.
-	 * @return
-	 */
-	public double getTopBattingAvg() {
-		double max = 0;
-		int count = 0;
-		for(int i =0; i < csvRuns.size(); i++) {
-			if (csvRuns.get(i).average > max) {
-				max = csvRuns.get(i).average;
-				count = i;
-			}
-		}
-		System.out.println("Player with highest Avg is: "+csvRuns.get(count).player);
-		return max;
+		csvWickets = csv.getCSVFileList(read, IPLMostWickets.class);
+		return csvWickets.size();
 	}
 	/**
-	 * UC2_Return player with highest strike rate.
-	 * @return
+	 * Sort method in descnding order
+	 * @param <E>
+	 * @param list
+	 * @param censusComparator
 	 */
-	public double getTopStrike() {
-		double max = 0;
-		int count = 0;
-		for(int i =0; i < csvRuns.size(); i++) {
-			if (csvRuns.get(i).strikeRate > max) {
-				max = csvRuns.get(i).strikeRate;
-				count = i;
+	private<E> void sort(List<E> list, Comparator<E> censusComparator) {
+		for (int i =0; i < list.size(); i++) {
+			for(int j =0; j < list.size() - i - 1; j++) {
+				E census1 = list.get(j);
+				E census2 = list.get(j+1);
+				if (censusComparator.compare(census1, census2) < 0) {
+					list.set(j, census2);
+					list.set(j + 1, census1);
+				}
 			}
 		}
-		System.out.println("Player with top Striking Rates is: "+csvRuns.get(count).player);
-		return max;
+	}
+	/**
+	 * UC1_Return Top Batting Avg.
+	 * @return
+	 */
+	public String getTopBatting() {
+		Comparator<IPLMostRuns> censusComparator = Comparator.comparing(census -> census.average);
+		this.sort(csvRuns,censusComparator);
+		String sortedAvg = new Gson().toJson(csvRuns);
+		return sortedAvg;
+	}
+	/**
+	 * UC2_Return Highest Strike rate
+	 * @return
+	 */
+	public String getTopStrike() {
+		Comparator<IPLMostRuns> censusComparator = Comparator.comparing(census -> census.strikeRate);
+		this.sort(csvRuns,censusComparator);
+		String sortedStrikeRate = new Gson().toJson(csvRuns);
+		return sortedStrikeRate;
 	}
 }
 
