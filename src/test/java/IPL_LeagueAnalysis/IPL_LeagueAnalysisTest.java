@@ -91,4 +91,14 @@ public class IPL_LeagueAnalysisTest {
 		assertEquals("David Warner", mostRuns[0].player);
 		System.out.println("6)Criketer with best average and max runs: \n"+mostRuns[0].player);
 	}
+	@Test
+	public void givenCSVFileOfRuns_IfMatchTopBowlingAvg_ReturnsThePlayer() 
+			throws IOException, CSVBuilderExecption {
+		IPL_LeagueAnalysis test = new IPL_LeagueAnalysis();
+		test.loadMostWicketsCSVFile(FileName_MostWickets);
+		String result = test.getSortedOnBowlingAvg();
+		IPLMostWickets[] mostRuns = new Gson().fromJson(result, IPLMostWickets[].class);
+		assertEquals("Anukul Roy", mostRuns[0].player);
+		System.out.println("7)Cricketer with top bowling avg is: \n"+mostRuns[0].player+" with bowling average: "+mostRuns[0].avg );
+	}
 }
