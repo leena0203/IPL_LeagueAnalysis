@@ -121,6 +121,16 @@ public class IPL_LeagueAnalysis {
 		String sort = new Gson().toJson(csvRuns);
 		return sort;
 	}
+	/**
+	 * UC6_Return player who hit max runs and have highest strike rate
+	 * @return
+	 */
+	public String bestAvgWithMaxRuns() {
+		Comparator<IPLMostRuns> iplComparator = Comparator.comparing(ipl -> ipl.runs);
+		this.sort(csvRuns,iplComparator.thenComparing(ipl -> ipl.average));
+		String sort = new Gson().toJson(csvRuns);
+		return sort;
+	}
 	
 }
 
