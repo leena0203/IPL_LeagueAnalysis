@@ -155,10 +155,23 @@ public class IPL_LeagueAnalysis {
 		String sorted = new Gson().toJson(csvWickets);
 		return sorted;
 	}
-	
+	/**
+	 * UC8_Return player with top strike rate on bowling
+	 * @return
+	 */
 	public String getSortedOnStrikeRate() {
 		Comparator<IPLMostWickets> iplCSVComparator = Comparator.comparing(entry -> entry.strikeRate);
 		this.sortForBowling(csvWickets, iplCSVComparator);
+		String sorted = new Gson().toJson(csvWickets);
+		return sorted;
+	}
+	/**
+	 * UC9_Return player with best economy
+	 * @return
+	 */
+	public String getSortedOnEconomy() {
+		Comparator<IPLMostWickets> iplCSVComparator = Comparator.comparing(entry -> entry.economy);
+		this.sort(csvWickets, iplCSVComparator);
 		String sorted = new Gson().toJson(csvWickets);
 		return sorted;
 	}

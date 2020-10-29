@@ -102,7 +102,7 @@ public class IPL_LeagueAnalysisTest {
 		System.out.println("7)Cricketer with top bowling avg is: \n"+mostRuns[0].player+" with bowling average: "+mostRuns[0].avg );
 	}
 	@Test
-	public void givenCSVFileOfRuns_IfMatchTopBowlingAvg_ReturnsTheSecondPlayer() 
+	public void givenCSVFileOfRuns_IfMatchTopBowlingStrikeRate_ReturnsThePlayer() 
 			throws IOException, CSVBuilderExecption {
 		IPL_LeagueAnalysis test = new IPL_LeagueAnalysis();
 		test.loadMostWicketsCSVFile(FileName_MostWickets);
@@ -110,5 +110,15 @@ public class IPL_LeagueAnalysisTest {
 		IPLMostWickets[] mostRuns = new Gson().fromJson(result, IPLMostWickets[].class);
 		assertEquals("Alzarri Joseph", mostRuns[0].player);
 		System.out.println("8)Cricketer with top Strike Rate is: \n"+mostRuns[0].player+" with strike rate: "+mostRuns[0].strikeRate );
+}
+	@Test
+	public void givenCSVFileOfRuns_IfMatchTopBowlingEconomy_ReturnsTheSecondPlayer() 
+			throws IOException, CSVBuilderExecption {
+		IPL_LeagueAnalysis test = new IPL_LeagueAnalysis();
+		test.loadMostWicketsCSVFile(FileName_MostWickets);
+		String result = test.getSortedOnEconomy();
+		IPLMostWickets[] mostRuns = new Gson().fromJson(result, IPLMostWickets[].class);
+		assertEquals("Shivam Dube", mostRuns[0].player);
+		System.out.println("9)Cricketer with top Strike Rate is: \n"+mostRuns[0].player+" with strike rate: "+mostRuns[0].strikeRate );
 }
 }
