@@ -175,5 +175,24 @@ public class IPL_LeagueAnalysis {
 		String sorted = new Gson().toJson(csvWickets);
 		return sorted;
 	}
+	/**
+	 * UC10_Player with best strike with  5w and 4w
+	 * @return
+	 */
+	private Double calculateStrikeRateWith4w5w(IPLMostWickets player) {
+		double numOfWicketsWith4w5w = player.fourWickets * 4 + player.fiveWickets * 5;
+		if (numOfWicketsWith4w5w == 0)
+			return Double.MAX_VALUE;
+		int numOfBalls = (int) player.overs;
+		numOfBalls = numOfBalls * 6 + (int) ((player.overs - numOfBalls) * 10);
+		return numOfBalls / numOfWicketsWith4w5w;
+	}
+	public String getPlayerWithBestStrikeRateWith4w5w() {
+		IPLMostWickets topEconomyPlayer = csvWickets.stream()
+				.min((x, y) -> Double.compare(calculateStrikeRateWith4w5w(x), calculateStrikeRateWith4w5w(y))).get();
+		return topEconomyPlayer.player;
+	}
+
 }
+
 
