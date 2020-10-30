@@ -130,4 +130,14 @@ public class IPL_LeagueAnalysisTest {
 		assertEquals("Alzarri Joseph", result);
 		System.out.println("10)Cricketer with top Strike Rate with 4w and 5w is: \n"+result );
 }
+	@Test
+	public void givenCSVFileOfRuns_IfMatchTopBowlingAvgAndStrikeRate_ReturnsThePlayer() 
+			throws IOException, CSVBuilderExecption {
+		IPL_LeagueAnalysis test = new IPL_LeagueAnalysis();
+		test.loadMostWicketsCSVFile(FileName_MostWickets);
+		String result = test.getSortedOnBowlingAvgAndStrikeRate();
+		IPLMostWickets[] mostRuns = new Gson().fromJson(result, IPLMostWickets[].class);
+		assertEquals("Anukul Roy", mostRuns[0].player);
+		System.out.println("11)Cricketer with top bowling avg and high strike rate is: \n"+mostRuns[0].player);
+	}
 }

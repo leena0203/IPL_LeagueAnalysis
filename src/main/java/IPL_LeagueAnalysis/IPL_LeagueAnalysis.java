@@ -192,7 +192,16 @@ public class IPL_LeagueAnalysis {
 				.min((x, y) -> Double.compare(calculateStrikeRateWith4w5w(x), calculateStrikeRateWith4w5w(y))).get();
 		return topEconomyPlayer.player;
 	}
-
+	/**
+	 * UC11_Player with top bowling avg and max strike rate
+	 * @return
+	 */
+	public String getSortedOnBowlingAvgAndStrikeRate() {
+		Comparator<IPLMostWickets> iplCSVComparator = Comparator.comparing(entry -> entry.avg);
+		this.sortForBowling(csvWickets, iplCSVComparator.thenComparing(entry -> entry.strikeRate));
+		String sorted = new Gson().toJson(csvWickets);
+		return sorted;
+	}
 }
 
 
