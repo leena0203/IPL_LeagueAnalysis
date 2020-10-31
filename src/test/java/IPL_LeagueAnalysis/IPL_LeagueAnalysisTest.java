@@ -92,7 +92,7 @@ public class IPL_LeagueAnalysisTest {
 		System.out.println("6)Criketer with best average and max runs: \n"+mostRuns[0].player);
 	}
 	@Test
-	public void givenCSVFileOfRuns_IfMatchTopBowlingAvg_ReturnsThePlayer() 
+	public void givenCSVFileOfWickets_IfMatchTopBowlingAvg_ReturnsThePlayer() 
 			throws IOException, CSVBuilderExecption {
 		IPL_LeagueAnalysis test = new IPL_LeagueAnalysis();
 		test.loadMostWicketsCSVFile(FileName_MostWickets);
@@ -102,7 +102,7 @@ public class IPL_LeagueAnalysisTest {
 		System.out.println("7)Cricketer with top bowling avg is: \n"+mostRuns[0].player+" with bowling average: "+mostRuns[0].avg );
 	}
 	@Test
-	public void givenCSVFileOfRuns_IfMatchTopBowlingStrikeRate_ReturnsThePlayer() 
+	public void givenCSVFileOfWickets_IfMatchTopBowlingStrikeRate_ReturnsThePlayer() 
 			throws IOException, CSVBuilderExecption {
 		IPL_LeagueAnalysis test = new IPL_LeagueAnalysis();
 		test.loadMostWicketsCSVFile(FileName_MostWickets);
@@ -112,7 +112,7 @@ public class IPL_LeagueAnalysisTest {
 		System.out.println("8)Cricketer with top Strike Rate is: \n"+mostRuns[0].player+" with strike rate: "+mostRuns[0].strikeRate );
 }
 	@Test
-	public void givenCSVFileOfRuns_IfMatchTopBowlingEconomy_ReturnsThePlayer() 
+	public void givenCSVFileOfWickets_IfMatchTopBowlingEconomy_ReturnsThePlayer() 
 			throws IOException, CSVBuilderExecption {
 		IPL_LeagueAnalysis test = new IPL_LeagueAnalysis();
 		test.loadMostWicketsCSVFile(FileName_MostWickets);
@@ -122,7 +122,7 @@ public class IPL_LeagueAnalysisTest {
 		System.out.println("9)Cricketer with top Strike Rate is: \n"+mostRuns[0].player+" with strike rate: "+mostRuns[0].strikeRate );
 }
 	@Test
-	public void givenCSVFileOfRuns_IfMatchTopStrikeWith5wAnd4w_ReturnsThePlayer() 
+	public void givenCSVFileOfWickets_IfMatchTopStrikeWith5wAnd4w_ReturnsThePlayer() 
 			throws IOException, CSVBuilderExecption {
 		IPL_LeagueAnalysis test = new IPL_LeagueAnalysis();
 		test.loadMostWicketsCSVFile(FileName_MostWickets);
@@ -131,7 +131,7 @@ public class IPL_LeagueAnalysisTest {
 		System.out.println("10)Cricketer with top Strike Rate with 4w and 5w is: \n"+result );
 }
 	@Test
-	public void givenCSVFileOfRuns_IfMatchTopBowlingAvgAndStrikeRate_ReturnsThePlayer() 
+	public void givenCSVFileOfWickets_IfMatchTopBowlingAvgAndStrikeRate_ReturnsThePlayer() 
 			throws IOException, CSVBuilderExecption {
 		IPL_LeagueAnalysis test = new IPL_LeagueAnalysis();
 		test.loadMostWicketsCSVFile(FileName_MostWickets);
@@ -139,5 +139,15 @@ public class IPL_LeagueAnalysisTest {
 		IPLMostWickets[] mostRuns = new Gson().fromJson(result, IPLMostWickets[].class);
 		assertEquals("Anukul Roy", mostRuns[0].player);
 		System.out.println("11)Cricketer with top bowling avg and high strike rate is: \n"+mostRuns[0].player);
+	}
+	@Test
+	public void givenCSVFileOfWickets_PlayerTakesMaxWktsAndHaveMaxBowlingAvg_ReturnsThePlayer() 
+			throws IOException, CSVBuilderExecption {
+		IPL_LeagueAnalysis test = new IPL_LeagueAnalysis();
+		test.loadMostWicketsCSVFile(FileName_MostWickets);
+		String sortedCSVData = test.getSortedOnWktsAndAvg();
+		IPLMostWickets[] iplCSV = new Gson().fromJson(sortedCSVData, IPLMostWickets[].class);
+		assertEquals("Anukul Roy", iplCSV[0].player);
+		System.out.println("12)Cricketer with top bowling avg and high strike rate is: \n"+iplCSV[0].player);
 	}
 }

@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.google.gson.Gson;
 
@@ -47,7 +48,7 @@ public class IPL_LeagueAnalysis {
 	 * @param list
 	 * @param censusComparator
 	 */
-	private<E> void sort(List<E> list, Comparator<E> iplComparator) {
+	private<E> List<E> sort(List<E> list, Comparator<E> iplComparator) {
 		for (int i =0; i < list.size(); i++) {
 			for(int j =0; j < list.size() - i - 1; j++) {
 				E player1 = list.get(j);
@@ -58,6 +59,7 @@ public class IPL_LeagueAnalysis {
 				}
 			}
 		}
+		return list;
 	}
 	
 	/**
@@ -199,6 +201,13 @@ public class IPL_LeagueAnalysis {
 	public String getSortedOnBowlingAvgAndStrikeRate() {
 		Comparator<IPLMostWickets> iplCSVComparator = Comparator.comparing(entry -> entry.avg);
 		this.sortForBowling(csvWickets, iplCSVComparator.thenComparing(entry -> entry.strikeRate));
+		String sorted = new Gson().toJson(csvWickets);
+		return sorted;
+	}
+	public String getSortedOnWktsAndAvg() {
+		Comparator<IPLMostWickets> iplCSVComparator = Comparator.comparing(entry -> entry.wickets);
+		//List<IPLMostWickets> tempList = this.sort(csvWickets, iplCSVComparator).stream().limit(20).collect(Collectors.toList());
+		this.sortForBowling(csvWickets, iplCSVComparator.thenComparing(entry -> entry.avg));
 		String sorted = new Gson().toJson(csvWickets);
 		return sorted;
 	}
