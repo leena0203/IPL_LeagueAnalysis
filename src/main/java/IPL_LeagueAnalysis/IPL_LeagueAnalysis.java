@@ -269,6 +269,16 @@ public class IPL_LeagueAnalysis {
 	 this.sort(tempList, Comparator.comparing(entry -> entry.average));
 		return tempList;
 	}
+	/**
+	 * UC16_Player who hit no 100s and 50s and have best bating avg
+	 * @return
+	 */
+	public List<IPLMostRuns> getSortedOnZeroCenturiesAndBestBattingAvg() {
+		csvRuns.removeIf(entry -> (entry.hundreds + entry.fiftys) != 0);
+		Comparator<IPLMostRuns> iplCSVComparator = Comparator.comparing(entry -> entry.average);
+		this.sort(csvRuns, iplCSVComparator);
+		return csvRuns;
+	}
 }
 
 

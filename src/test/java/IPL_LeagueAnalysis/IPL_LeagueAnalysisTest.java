@@ -179,4 +179,12 @@ public class IPL_LeagueAnalysisTest {
 		assertEquals("David Warner", sortedCSVData.get(0).player);
 		assertEquals("Jonny Bairstow", sortedCSVData.get(1).player);
 	}
+	@Test
+	public void givenWktsData_WhenSortedOnZeroCenturiesAndBestBattingAvg()
+			throws IOException, CSVBuilderExecption{
+		IPL_LeagueAnalysis test = new IPL_LeagueAnalysis();
+		test.loadMostRunsCSVFile(FileName_MostRuns);
+		List<IPLMostRuns> sortedCSVData = test.getSortedOnZeroCenturiesAndBestBattingAvg();
+		assertEquals("Marcus Stoinis", sortedCSVData.get(0).player);
+	}
 }
