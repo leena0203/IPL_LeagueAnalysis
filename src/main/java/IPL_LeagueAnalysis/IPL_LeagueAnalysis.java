@@ -5,12 +5,14 @@ import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import CSVReader.CSVBuilderExecption;
 import CSVReader.CSVBuilderFactory;
@@ -204,13 +206,37 @@ public class IPL_LeagueAnalysis {
 		String sorted = new Gson().toJson(csvWickets);
 		return sorted;
 	}
+	/**
+	 * UC12_Player who takes max wkt and have top bowling avg
+	 * @return
+	 */
 	public String getSortedOnWktsAndAvg() {
 		Comparator<IPLMostWickets> iplCSVComparator = Comparator.comparing(entry -> entry.wickets);
-		//List<IPLMostWickets> tempList = this.sort(csvWickets, iplCSVComparator).stream().limit(20).collect(Collectors.toList());
 		this.sortForBowling(csvWickets, iplCSVComparator.thenComparing(entry -> entry.avg));
 		String sorted = new Gson().toJson(csvWickets);
 		return sorted;
 	}
+	/**
+	 * UC13_Player having bowling and batting max avg
+	 * @return
+	 */
+	public List<String> getSortedOnBestBattingAndBowlingAvg() {
+		List<IPLMostRuns> battingList = (ArrayList<IPLMostRuns>) new Gson().fromJson(this.getTopBatting(),
+				new TypeToken<ArrayList<IPLMostRuns>>() {
+				}.getType());
+		List<IPLMostWickets> bowlingList = (ArrayList<IPLMostWickets>) new Gson().fromJson(this.getSortedOnBowlingAvg(),
+				new TypeToken<ArrayList<IPLMostWickets>>() {
+				}.getType());
+		List<String> playerList = new ArrayList<>();
+		for (IPLMostRuns bat : battingList) {
+			for (IPLMostWickets bowl : bowlingList) {
+				if (bat.player.equals(bowl.player)) {
+					playerList.add(bat.player);
+				}
+			}
+		}
+		return playerList;
+}
 }
 
 

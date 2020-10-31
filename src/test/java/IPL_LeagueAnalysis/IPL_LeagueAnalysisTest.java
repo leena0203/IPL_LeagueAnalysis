@@ -3,6 +3,7 @@ package IPL_LeagueAnalysis;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.junit.Test;
 
@@ -149,5 +150,15 @@ public class IPL_LeagueAnalysisTest {
 		IPLMostWickets[] iplCSV = new Gson().fromJson(sortedCSVData, IPLMostWickets[].class);
 		assertEquals("Anukul Roy", iplCSV[0].player);
 		System.out.println("12)Cricketer with top bowling avg and high strike rate is: \n"+iplCSV[0].player);
+	}
+	public void givenWktsData_WhenSortedOnBattingAndBowlingAvg_ShouldReturnTrue()
+			throws IOException, CSVBuilderExecption{
+		IPL_LeagueAnalysis test = new IPL_LeagueAnalysis();
+		test.loadMostRunsCSVFile(FileName_MostRuns);
+		test.loadMostWicketsCSVFile(FileName_MostWickets);
+		List<String> sortedCSVData = test.getSortedOnBestBattingAndBowlingAvg();
+		assertEquals("Andre Russell", sortedCSVData.get(0));
+		assertEquals("Marcus Stoinis", sortedCSVData.get(1));
+
 	}
 }
