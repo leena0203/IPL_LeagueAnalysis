@@ -159,6 +159,16 @@ public class IPL_LeagueAnalysisTest {
 		List<String> sortedCSVData = test.getSortedOnBestBattingAndBowlingAvg();
 		assertEquals("Andre Russell", sortedCSVData.get(0));
 		assertEquals("Marcus Stoinis", sortedCSVData.get(1));
+	}
+	@Test
+	public void givenWktsData_WhenSortedOnMaxRunsAndWkts_ShouldReturnTrue()
+			throws IOException, CSVBuilderExecption {
+		IPL_LeagueAnalysis test = new IPL_LeagueAnalysis();
+		test.loadMostRunsCSVFile(FileName_MostRuns);
+		test.loadMostWicketsCSVFile(FileName_MostWickets);
+		List<String> sortedCSVData = test.getSortedOnMaxRunsAndWkts();
+		assertEquals("Andre Russell", sortedCSVData.get(0));
+		assertEquals("Hardik Pandya", sortedCSVData.get(1));
 
 	}
 }

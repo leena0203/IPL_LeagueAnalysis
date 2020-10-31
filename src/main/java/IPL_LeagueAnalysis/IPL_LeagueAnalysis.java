@@ -55,7 +55,7 @@ public class IPL_LeagueAnalysis {
 			for(int j =0; j < list.size() - i - 1; j++) {
 				E player1 = list.get(j);
 				E player2 = list.get(j+1);
-				if (iplComparator.compare(player1, player2) > 0) {
+				if (iplComparator.compare(player1, player2) < 0) {
 					list.set(j, player2);
 					list.set(j + 1, player1);
 				}
@@ -63,14 +63,14 @@ public class IPL_LeagueAnalysis {
 		}
 		return list;
 	}
-	
+
 	/**
 	 * UC1_Return Top Batting Avg.
 	 * @return
 	 */
 	public String getTopBatting() {
 		Comparator<IPLMostRuns> iplComparator = Comparator.comparing(ipl -> ipl.average);
-		this.sort(csvRuns,iplComparator.reversed());
+		this.sort(csvRuns,iplComparator);
 		String sortedAvg = new Gson().toJson(csvRuns);
 		return sortedAvg;
 	}
@@ -80,7 +80,7 @@ public class IPL_LeagueAnalysis {
 	 */
 	public String getTopStrike() {
 		Comparator<IPLMostRuns> iplComparator = Comparator.comparing(ipl -> ipl.strikeRate);
-		this.sort(csvRuns,iplComparator.reversed());
+		this.sort(csvRuns,iplComparator);
 		String sortedStrikeRate = new Gson().toJson(csvRuns);
 		return sortedStrikeRate;
 	}
@@ -90,11 +90,11 @@ public class IPL_LeagueAnalysis {
 	 */
 	public String getMax6sAnd4s() {
 		Comparator<IPLMostRuns> iplComparator = Comparator.comparing(ipl -> (ipl.fours)+(ipl.sixes));
-		this.sort(csvRuns,iplComparator.reversed());
+		this.sort(csvRuns,iplComparator);
 		String sortedHit = new Gson().toJson(csvRuns);
 		return sortedHit;
 	}
-	
+
 	/**
 	 * UC4_Return player with highest strike
 	 * @return
@@ -107,12 +107,12 @@ public class IPL_LeagueAnalysis {
 		String name ="";
 		for (int i =0; i< csvRuns.size();i++) {
 			temp = (csvRuns.get(i).fours + csvRuns.get(i).sixes);
-					tempSR = temp / csvRuns.get(i).bf;
-					if( temp> max && tempSR>strike) {
-						max = temp;
-						strike = tempSR;
-						name = csvRuns.get(i).player;
-					}
+			tempSR = temp / csvRuns.get(i).bf;
+			if( temp> max && tempSR>strike) {
+				max = temp;
+				strike = tempSR;
+				name = csvRuns.get(i).player;
+			}
 		}
 		return name;
 	}
@@ -122,7 +122,7 @@ public class IPL_LeagueAnalysis {
 	 */
 	public String bestAvgWithStrikeRate() {
 		Comparator<IPLMostRuns> iplComparator = Comparator.comparing(ipl -> ipl.average);
-		this.sort(csvRuns,iplComparator.thenComparing(ipl -> ipl.strikeRate).reversed());
+		this.sort(csvRuns,iplComparator.thenComparing(ipl -> ipl.strikeRate));
 		String sort = new Gson().toJson(csvRuns);
 		return sort;
 	}
@@ -132,11 +132,11 @@ public class IPL_LeagueAnalysis {
 	 */
 	public String bestAvgWithMaxRuns() {
 		Comparator<IPLMostRuns> iplComparator = Comparator.comparing(ipl -> ipl.runs);
-		this.sort(csvRuns,iplComparator.thenComparing(ipl -> ipl.average).reversed());
+		this.sort(csvRuns,iplComparator.thenComparing(ipl -> ipl.average));
 		String sort = new Gson().toJson(csvRuns);
 		return sort;
 	}
-	
+
 	private <E> void sortForBowling(List<IPLMostWickets> csvList, Comparator<IPLMostWickets> iplCSVComparator) {
 		for (int i = 0; i < csvList.size(); i++) {
 			for (int j = 0; j < csvList.size() - i - 1; j++) {
@@ -175,7 +175,7 @@ public class IPL_LeagueAnalysis {
 	 */
 	public String getSortedOnEconomy() {
 		Comparator<IPLMostWickets> iplCSVComparator = Comparator.comparing(entry -> entry.economy);
-		this.sort(csvWickets, iplCSVComparator);
+		this.sort(csvWickets, iplCSVComparator.reversed());
 		String sorted = new Gson().toJson(csvWickets);
 		return sorted;
 	}
@@ -223,10 +223,10 @@ public class IPL_LeagueAnalysis {
 	public List<String> getSortedOnBestBattingAndBowlingAvg() {
 		List<IPLMostRuns> battingList = (ArrayList<IPLMostRuns>) new Gson().fromJson(this.getTopBatting(),
 				new TypeToken<ArrayList<IPLMostRuns>>() {
-				}.getType());
+		}.getType());
 		List<IPLMostWickets> bowlingList = (ArrayList<IPLMostWickets>) new Gson().fromJson(this.getSortedOnBowlingAvg(),
 				new TypeToken<ArrayList<IPLMostWickets>>() {
-				}.getType());
+		}.getType());
 		List<String> playerList = new ArrayList<>();
 		for (IPLMostRuns bat : battingList) {
 			for (IPLMostWickets bowl : bowlingList) {
@@ -236,7 +236,28 @@ public class IPL_LeagueAnalysis {
 			}
 		}
 		return playerList;
-}
+	}
+	/**
+	 * UC14_Player who are best all rounder
+	 * @return
+	 */
+	public List<String> getSortedOnMaxRunsAndWkts() {
+		List<IPLMostRuns> runsList = this.sort(csvRuns, Comparator.comparing(entry->entry.runs)).stream().limit(50).collect(Collectors.toList());
+		List<IPLMostWickets> wicketsList = this.sort(csvWickets, Comparator.comparing(entry->entry.wickets));
+		return this.forAllRounder(runsList,wicketsList);	
+	}
+
+	private List<String> forAllRounder(List<IPLMostRuns> runsList, List<IPLMostWickets> wicketsList) {
+		List<String> playerList = new ArrayList<>();
+		for (IPLMostRuns bat : runsList) {
+			for (IPLMostWickets bowl : wicketsList) {
+				if (bat.player.equals(bowl.player)) {
+					playerList.add(bat.player);
+				}
+			}
+		}
+		return playerList;
+	}
 }
 
 
