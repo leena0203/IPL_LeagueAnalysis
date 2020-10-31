@@ -258,6 +258,17 @@ public class IPL_LeagueAnalysis {
 		}
 		return playerList;
 	}
+	/**
+	 * UC15_Player who hit max hundresds and with best batting avg.
+	 * @return
+	 */
+	public List<IPLMostRuns> getSortedOnMaxHundredsAndBattingAverage() {
+		csvRuns.removeIf(entry -> entry.hundreds == 0 );
+		Comparator<IPLMostRuns> iplCSVComparator = Comparator.comparing(entry -> entry.hundreds);
+		List<IPLMostRuns> tempList = this.sort(csvRuns, iplCSVComparator);
+	 this.sort(tempList, Comparator.comparing(entry -> entry.average));
+		return tempList;
+	}
 }
 
 
