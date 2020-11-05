@@ -1,4 +1,4 @@
-package IPL_LeagueAnalysis;
+package com.bridgelabz.iplLeagueAnalysis;
 
 import java.io.IOException;
 import java.io.Reader;

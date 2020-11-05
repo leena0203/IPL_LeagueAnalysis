@@ -1,4 +1,4 @@
-package IPL_LeagueAnalysis;
+package com.bridgelabz.iplLeagueeAnalysis;
 
 import static org.junit.Assert.*;
 
@@ -7,6 +7,9 @@ import java.util.List;
 
 import org.junit.Test;
 
+import com.bridgelabz.iplLeagueAnalysis.IPLMostRuns;
+import com.bridgelabz.iplLeagueAnalysis.IPLMostWickets;
+import com.bridgelabz.iplLeagueAnalysis.IPL_LeagueAnalysis;
 import com.google.gson.Gson;
 
 import CSVReader.CSVBuilderExecption;
